@@ -1,0 +1,49 @@
+<head>
+  <title>shinkelwars</title>
+</head>
+
+<body>
+	{{> main}}
+</body>
+
+<template name="main">
+	<div class="container">
+	{{> navigation}}
+	{{#if currentUser}}
+	  	{{> hello}}
+	{{else}}
+		{{> shinkelintro}}
+	{{/if}}
+	</div>
+</template>
+
+<template name="shinkelintro">
+	<div class="hero-unit">
+		<h1>Shinkelwars!</h1>
+		<p>Begin your quest for world domination today. {{loginButtons}} to get started</p>
+	</div>
+</template>
+
+<template name="navigation">
+	<div class="navbar">
+		  <div class="navbar-inner">
+		    <a class="brand" href="#">Shinkelwars</a>
+		        <ul class="nav">
+			      <li class="active"><a href="#">Home</a></li>
+			    </ul>
+		   </div>
+	</div>
+</template>
+
+
+<template name="hello">
+	<div class="row">
+		<div class="span2"/>
+		<div id="map_canvas" class="span8" style="height: 400px">
+		</div>
+		<div class="span2">Players:</div>
+			{{#each nations}}
+				<div>{{nationname}}</div>
+			{{/each}}
+	</div>
+</template>
