@@ -13,20 +13,20 @@ if(Meteor.isServer){
 		var initializing = true; 
 		var handle = CMarkers.find({}).observeChanges({
 			added: function(id, field){
-				if(!initializing){
+	
 					self.added("displayMarkers", id, field);	
-				}	
+				
 			},
 			removed: function(id, field){
-				if(!initializing){
+			
 					self.removed("displayMarkers", id, field); 
-				}
+				
 			}
 		});
 
 		initializing = false; 
-
 		self.ready(); 
+		
 		self.onStop(function(){
 			handle.stop()
 		}); 
@@ -35,11 +35,13 @@ if(Meteor.isServer){
 
 	Meteor.methods({
 		createMarker: function(gameId, lat, lng){
+			var time = new Date().getTime(); 
 			var marker =  CMarkers.insert({
 				gameId: gameId, 
 				owner: this.userId,
 				lat: lat, 
-				lng: lng
+				lng: lng,
+				createTime: time
 			});
 
 			console.log("Saved a marker: " + marker); 

@@ -6,11 +6,19 @@ Meteor.subscribe("PlayerMarkers");
 
 displayMarkers = new Meteor.Collection("displayMarkers"); 
 
+var lastDisplayedMarker = 0; 
+
 Meteor.autorun(function(){
-  displayMarkers.find({}).forEach(function(marker){
-    var latLng = new google.maps.LatLng(marker.lat, marker.lng); 
-    drawMarker(latLng,marker.owner);
-  });
+  if(Session.get("mapLoaded") == true){
+    console.log("Drawing markers"); 
+    if(Meteor.user()){
+      displayMarkers.find({createTime: {$gt: lastDisplayedMarker}}).forEach(function(marker){
+        var latLng = new google.maps.LatLng(marker.lat, marker.lng); 
+        drawMarker(latLng,marker.owner);
+        lastDisplayedMarker = Math.max(lastDisplayedMarker, marker.createTime); 
+      });
+    }
+  }
 });
 
   Meteor.autorun(function (handle) {

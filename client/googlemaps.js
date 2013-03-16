@@ -9,7 +9,8 @@ function initialize() {
   document.getElementById("map_canvas").appendChild(document.createElement("strong")); 
   map = new google.maps.Map((document.getElementById("map_canvas")), mapOptions);
   console.log("Map rendered"); 
-  setupEvents(); 
+  setupEvents();
+  Session.set("mapLoaded", true);  
 }
 
 function loadScript() {
